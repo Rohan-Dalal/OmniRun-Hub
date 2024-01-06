@@ -1,25 +1,23 @@
 package com.example.enhancedrunningcompanionapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    Button registerButton;
+    TextView switchToSignin;
+    EditText firstNameEditText, lastNameEditText, passwordEditText, emailEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,30 +30,27 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        Button registerButton = findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                register();
-            }
-        });
+        // Initialize UI components
+        registerButton = findViewById(R.id.registerButton);
+        switchToSignin = findViewById(R.id.SignIn);
+        firstNameEditText = findViewById(R.id.firstNameEditText);
+        lastNameEditText = findViewById(R.id.lastNameEditText);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
 
-        TextView switchToSignin = findViewById(R.id.SignIn);
-        switchToSignin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-                RegisterActivity.this.finish();
-            }
+        // Registers the user
+        registerButton.setOnClickListener(view -> register());
+
+        // Switches to the log in activity
+        switchToSignin.setOnClickListener(view -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+            RegisterActivity.this.finish();
         });
     }
 
     private void register() {
-        EditText firstNameEditText = findViewById(R.id.firstNameEditText);
-        EditText lastNameEditText = findViewById(R.id.lastNameEditText);
-        EditText emailEditText = findViewById(R.id.emailEditText);
-        EditText passwordEditText = findViewById(R.id.passwordEditText);
+        // Pulls user inputted information from edit text
         String firstName = firstNameEditText.getText().toString();
         String lastName = lastNameEditText.getText().toString();
         String email = emailEditText.getText().toString();
@@ -66,28 +61,19 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        System.out.println("PASSWORD!!" + password);
-        System.out.println("EMAIL!!" + email);
-        System.out.println("FIRST!!" + firstName);
-        System.out.println("LAST!!" + lastName);
-
+        // Registers user using Firebase
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            User newUser = new User(firstName, lastName, email);
-                            FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    RegisterActivity.this.finish();
-                                }
-                            });
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        User newUser = new User(firstName, lastName, email);
+                        FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(newUser).addOnCompleteListener(task1 -> {
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            RegisterActivity.this.finish();
+                        });
+                    } else {
+                        // Notifies user registration failed
+                        Toast.makeText(RegisterActivity.this, "Register Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

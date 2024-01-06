@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+// Activity that handles all the Fragments for each feature of the app
 public class MainActivity extends AppCompatActivity {
 
     TextView textViewHeader;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // If the user is not signed in, user is forced the sign in page
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser == null) {
@@ -38,28 +40,32 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // Initialize UI components
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         textViewHeader = findViewById(R.id.textview_main);
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
+        // Creates a fragment for each feature of the app
         CalculatorFragment calculatorFragment = new CalculatorFragment();
         ActivityFragment activityFragment = new ActivityFragment();
         GPSFragment gpsFragment = new GPSFragment();
         AccountInfoFragment accountInfoFragment = new AccountInfoFragment();
 
+        // If location permissions were not granted, user is first set to calculator
+        // If location permissions were granted, user is first set to the gps
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             bottomNavigationView.setSelectedItemId(R.id.calculator);
             fragmentTransaction.replace(R.id.selected_fragment, calculatorFragment);
-        }
-        else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             bottomNavigationView.setSelectedItemId(R.id.gps);
             fragmentTransaction.replace(R.id.selected_fragment, gpsFragment);
         }
         fragmentTransaction.commit();
 
+        // Switches fragment based on user's selections on navigation bar
         bottomNavigationView.setOnItemSelectedListener(item -> {
             fragmentTransaction = fragmentManager.beginTransaction();
             if(item.getItemId() == R.id.calculator) {
@@ -69,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     textViewHeader.setText("Run");
                     fragmentTransaction.replace(R.id.selected_fragment, gpsFragment);
+                } else {
+                    return false;
                 }
             } else if(item.getItemId() == R.id.activity) {
                 textViewHeader.setText("Activity");

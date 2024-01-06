@@ -10,6 +10,7 @@
         android:id="@+id/time2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/leaguespartan"
         android:text="Time (Hrs, Mins, Sec)"
         android:textSize="20sp" />
 
@@ -25,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
             android:ems="10"
+            android:fontFamily="@font/leaguespartan"
             android:inputType="number" />
 
         <TextView
@@ -32,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.05"
+            android:fontFamily="@font/leaguespartan"
             android:gravity="center"
             android:text=":"
             android:textSize="24sp" />
@@ -42,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
             android:ems="10"
+            android:fontFamily="@font/leaguespartan"
             android:inputType="number" />
 
         <TextView
@@ -49,6 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.05"
+            android:fontFamily="@font/leaguespartan"
             android:gravity="center"
             android:text=":"
             android:textSize="24sp" />
@@ -59,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
             android:ems="10"
+            android:fontFamily="@font/leaguespartan"
             android:inputType="number" />
     </LinearLayout>
 
@@ -66,6 +72,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/leaguespartan"
         android:text="Distance"
         android:textSize="20sp" />
 
@@ -81,6 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
             android:ems="10"
+            android:fontFamily="@font/leaguespartan"
             android:inputType="numberDecimal" />
 
         <Spinner
@@ -94,6 +102,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/leaguespartan"
         android:text="Pace (Hrs, Mins, Sec)"
         android:textSize="20sp" />
 
@@ -109,6 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
             android:ems="10"
+            android:fontFamily="@font/leaguespartan"
             android:inputType="number" />
 
         <TextView
@@ -116,6 +126,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.05"
+            android:fontFamily="@font/leaguespartan"
             android:gravity="center"
             android:text=":"
             android:textSize="24sp" />
@@ -126,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
             android:ems="10"
+            android:fontFamily="@font/leaguespartan"
             android:inputType="number" />
 
         <TextView
@@ -133,6 +145,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.05"
+            android:fontFamily="@font/leaguespartan"
             android:gravity="center"
             android:text=":"
             android:textSize="24sp" />
@@ -143,6 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
             android:ems="10"
+            android:fontFamily="@font/leaguespartan"
             android:inputType="number" />
 
         <Spinner
@@ -158,6 +172,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/leaguespartan"
         android:textColor="#FF0000"
         android:textSize="20sp" />
 
@@ -166,6 +181,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/leaguespartan"
         android:text="Calculate" />
 
 </LinearLayout>

@@ -1,7 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.EnhancedRunningCompanionApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">#2196F3</item> <!-- Blue -->
+        <item name="colorPrimaryDark">#1976D2</item> <!-- Darker Blue -->
+        <item name="colorAccent">#757575</item> <!-- Gray -->
+        <item name="android:textColorPrimary">#FFFFFF</item> <!-- White Text -->
     </style>
 </resources>

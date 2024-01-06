@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,7 +15,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+// Activity to allow the user to log in using email and password
 public class LoginActivity extends AppCompatActivity {
+    Button signInButton;
+    TextView switchToRegister;
+    EditText emailEditText, passwordEditText;
 
     private FirebaseAuth mAuth;
 
@@ -25,34 +28,32 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Initialize UI Components
+        signInButton = findViewById(R.id.signInButton);
+        switchToRegister = findViewById(R.id.registerTextView);
+        emailEditText = findViewById(R.id.emailEditText2);
+        passwordEditText = findViewById(R.id.passwordEditText2);
+
+        // Check if a user is already authenticated using FirebaseAuth. If so, finish the current activity and return.
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null) {
             finish();
             return;
         }
 
-        Button signInButton = findViewById(R.id.signInButton);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signin();
-            }
-        });
+        // Signs in the user with inputted credentials
+        signInButton.setOnClickListener(view -> signin());
 
-        TextView switchToRegister = findViewById(R.id.registerTextView);
-        switchToRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-                LoginActivity.this.finish();
-            }
+        // Switches to the Register Activity
+        switchToRegister.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+            LoginActivity.this.finish();
         });
     }
 
+    // Method to sign the user in
     private void signin() {
-        EditText emailEditText = findViewById(R.id.emailEditText2);
-        EditText passwordEditText = findViewById(R.id.passwordEditText2);
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         if(email.isEmpty() || password.isEmpty()) {
@@ -60,17 +61,18 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        System.out.println(email + password);
-
+        // Accesses Firebase Authorization
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            // Open the first page the actual running application
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             LoginActivity.this.finish();
                         } else {
+                            // Notifies user that sign in failed
                             Toast.makeText(LoginActivity.this, "Sign In Failed", Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -1,5 +1,6 @@
 package com.example.enhancedrunningcompanionapp;
 
+// Objects to handle all user's personal information
 public class User {
     private String firstName,lastName, email;
 

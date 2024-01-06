@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,13 +16,14 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
+// Fragment to allow user to calculate pace based information
 public class PaceCalculatorFragment extends Fragment {
     TextView mainActivityText, nullChecker;
     EditText time_hrs_edittext, time_min_edittext, time_sec_edittext, pace_distance_edittext, pace_hrs_edittext, pace_min_edittext, pace_sec_edittext;
     Spinner distance_spinner, pace_units_spinner;
     ArrayList<String> pace_arraylist, distance_arraylist;
     Button calculate;
-    double filled_out_fields, totalTime, totalPace, dummyNumber, selectedDistance, selectedPace = 0;
+    double filled_out_fields, totalTime, totalPace, dummyNumber = 0;
     double conversion = 1;
 
     @Nullable
@@ -32,6 +32,8 @@ public class PaceCalculatorFragment extends Fragment {
 
         View fragmentView = inflater.inflate(R.layout.fragment_pacecalculator, null);
         mainActivityText = getActivity().findViewById(R.id.textview_main);
+
+        // Initializes UI components
         time_hrs_edittext = fragmentView.findViewById(R.id.time_hrs_edittext);
         time_min_edittext = fragmentView.findViewById(R.id.time_min_edittext);
         time_sec_edittext = fragmentView.findViewById(R.id.time_sec_edittext);
@@ -44,11 +46,12 @@ public class PaceCalculatorFragment extends Fragment {
         nullChecker = fragmentView.findViewById(R.id.null_checker);
         calculate = fragmentView.findViewById(R.id.calculate);
 
-        pace_arraylist = new ArrayList<String>();
+        // Adds options for user's desired measuring metric
+        pace_arraylist = new ArrayList<>();
         pace_arraylist.add("per mile");
         pace_arraylist.add("per km");
 
-        distance_arraylist = new ArrayList<String>();
+        distance_arraylist = new ArrayList<>();
         distance_arraylist.add("miles");
         distance_arraylist.add("kilometers");
         distance_arraylist.add("meters");
@@ -62,37 +65,17 @@ public class PaceCalculatorFragment extends Fragment {
         distance_spinner.setSelection(0);
         pace_units_spinner.setSelection(0);
 
-        distance_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedDistance = i;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        pace_units_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedPace = i;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
+        // Does calculation for remaining empty field
         calculate.setOnClickListener(view -> {
-            if (!checkPaceNull())
+            if (!checkPaceNull()) {
                 filled_out_fields++;
-            if(!checkTimeNull())
+            }
+            if(!checkTimeNull()) {
                 filled_out_fields++;
-            if(!checkDistanceNull())
-                filled_out_fields ++;
+            }
+            if(!checkDistanceNull()) {
+                filled_out_fields++;
+            }
             if(filled_out_fields!=2){
                 nullChecker.setText("*Must Fill Out Only 2 Fields");
             }
@@ -121,18 +104,23 @@ public class PaceCalculatorFragment extends Fragment {
 
         return fragmentView;
     }
+
+    // Checks whether the time input fields are empty
     public boolean checkTimeNull(){
         return time_hrs_edittext.getText().toString().equals("") && time_min_edittext.getText().toString().equals("") && time_sec_edittext.getText().toString().equals("");
     }
 
+    // Checks whether the distance input field is empty
     public boolean checkDistanceNull(){
         return pace_distance_edittext.getText().toString().equals("");
     }
 
+    // Checks whether the pace input fields are empty
     public boolean checkPaceNull(){
         return pace_hrs_edittext.getText().toString().equals("") && pace_min_edittext.getText().toString().equals("") && pace_sec_edittext.getText().toString().equals("");
     }
 
+    // Converts hours, minutes, seconds to total amount of seconds
     public double convertToSeconds(EditText editText_hrs, EditText editText_min, EditText editText_sec){
         double total = 0;
         if(!editText_hrs.getText().toString().equals(""))
@@ -153,14 +141,15 @@ public class PaceCalculatorFragment extends Fragment {
         editText_sec.setText(String.format("%02d", Math.round(dummyNumber)));
     }
 
+    // Does unit conversions based on user's selected units
     public void unitConversion(){
-        if (selectedDistance == 0 && selectedPace == 1) {
+        if (distance_spinner.getSelectedItem().toString().equals("miles") && pace_units_spinner.getSelectedItem().toString().equals("per km")) {
             conversion = 1.609344;
-        } else if(selectedDistance == 1 && selectedPace == 0) {
+        } else if(distance_spinner.getSelectedItem().toString().equals("kilometers") && pace_units_spinner.getSelectedItem().toString().equals("per mile")) {
             conversion = 1 / 1.609344;
-        } else if (selectedDistance == 2 && selectedPace == 0) {
+        } else if (distance_spinner.getSelectedItem().toString().equals("meters") && pace_units_spinner.getSelectedItem().toString().equals("per mile")) {
             conversion = 1 / 1609.344;
-        } else if (selectedDistance == 2 && selectedPace == 1) {
+        } else if (distance_spinner.getSelectedItem().toString().equals("meters") && pace_units_spinner.getSelectedItem().toString().equals("per km")) {
             conversion = 1 / 1000.0;
         }
     }

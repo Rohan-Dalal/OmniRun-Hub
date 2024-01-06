@@ -19,19 +19,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+//Fragment to display all of the user's account information
 public class AccountInfoFragment extends Fragment {
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    TextView nameTextView, emailTextView;
+    Button logoutButton;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_accountinfo, null);
 
-        TextView nameTextView = fragmentView.findViewById(R.id.nameTextView);
-        TextView emailTextView = fragmentView.findViewById(R.id.emailTextView);
+        // Initialize Firebase Realtime Database and create a reference to user-specific data
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        // Initialize UI Components
+        nameTextView = fragmentView.findViewById(R.id.nameTextView);
+        emailTextView = fragmentView.findViewById(R.id.emailTextView);
+        logoutButton = fragmentView.findViewById(R.id.logoutButton);
+
+        // Attach a ValueEventListener to myRef to listen for changes in user data
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -46,15 +56,12 @@ public class AccountInfoFragment extends Fragment {
             }
         });
 
-        Button logoutButton = fragmentView.findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
+        // Logs out user when button is clicked
+        logoutButton.setOnClickListener(view -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         });
 
         return fragmentView;

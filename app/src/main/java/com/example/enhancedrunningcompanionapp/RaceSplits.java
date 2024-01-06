@@ -1,5 +1,6 @@
 package com.example.enhancedrunningcompanionapp;
 
+// This class stores all the relevant information for a race split
 public class RaceSplits {
     private String time;
     private int distance;

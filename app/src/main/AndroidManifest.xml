@@ -22,13 +22,13 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="API-KEY-GOES-HERE" />
+            android:value="AIzaSyA2a3vbenIuI3rSqt8BhoLtBN8zjRFeutU" />
 
         <activity
-            android:name=".RaceCalculator"
+            android:name=".RaceCalculatorFragment"
             android:exported="false" />
         <activity
-            android:name=".PaceCalculator"
+            android:name=".PaceCalculatorFragment"
             android:exported="false" />
         <activity
             android:name=".GPSFragment"
