@@ -20,5 +20,4 @@
 ##Register / Sign in
 * Register and Sign in with your email address
 
-https://github.com/Rohan-Dalal/OmniRun-Hub/assets/133245983/a42000b2-6370-43fb-8ace-0228de8b6feb
-
+![E78C0DF4-2B8C-4BB3-B1F3-B1ACE50A147E_4_5005_c](https://github.com/Rohan-Dalal/OmniRun-Hub/assets/133245983/41fea3c4-3097-45c3-883a-85681d269386)
