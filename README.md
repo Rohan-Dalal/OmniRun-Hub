@@ -1,4 +1,4 @@
-![OmniRun Logo](https://github.com/Rohan-Dalal/OmniRun-Hub/assets/133245983/ac75c69d-42cb-4a64-a9bd-5ca0fdd9556b)
+![OmniRun Logo](https://github.com/Rohan-Dalal/OmniRun-Hub/blob/main/assets/133245983/ac75c69d-42cb-4a64-a9bd-5ca0fdd9556b.png){:width="100"}
 #OmniRun
 
 ##Technologies
@@ -20,4 +20,4 @@
 ##Register / Sign in
 * Register and Sign in with your email address
 
-![E78C0DF4-2B8C-4BB3-B1F3-B1ACE50A147E_4_5005_c](https://github.com/Rohan-Dalal/OmniRun-Hub/assets/133245983/41fea3c4-3097-45c3-883a-85681d269386)
+![E78C0DF4-2B8C-4BB3-B1F3-B1ACE50A147E_4_5005_c](https://github.com/Rohan-Dalal/OmniRun-Hub/assets/133245983/069d024e-afe9-483a-a604-ce99facf2677)
