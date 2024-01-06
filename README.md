@@ -1,4 +1,5 @@
-![OmniRun Logo](https://github.com/Rohan-Dalal/OmniRun-Hub/blob/main/assets/133245983/ac75c69d-42cb-4a64-a9bd-5ca0fdd9556b.png){:width="100"}
+![RunningAppLogo](https://github.com/Rohan-Dalal/OmniRun-Hub/assets/133245983/0354bda6-fdeb-4b6c-9831-e1e1d092d663)
+
 #OmniRun
 
 ##Technologies
