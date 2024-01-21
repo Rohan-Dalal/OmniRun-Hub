@@ -22,7 +22,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA2a3vbenIuI3rSqt8BhoLtBN8zjRFeutU" />
+            android:value="API-KEY" />
 
         <activity
             android:name=".RaceCalculatorFragment"
